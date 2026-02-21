@@ -572,7 +572,9 @@
     const currentUser = "{{ request.user.username }}";
 
     const socket = new WebSocket(
-        "ws://" + window.location.host + "/ws/chat/" + otherUser + "/"
+    (window.location.protocol === "https:" ? "wss://" : "ws://") +
+    window.location.host +
+    "/ws/chat/" + otherUser + "/"
     );
 
     const chatBox = document.getElementById("chat-box");
