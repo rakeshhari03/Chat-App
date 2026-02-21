@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App · Welcome</title>
+  <!-- Font Awesome 6 (free) for subtle icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8faff;  /* very light blue background */
+      color: #1e293b;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* professional navigation — white with blue accent */
+    .navbar {
+      background-color: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 100, 200, 0.08);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      border-bottom: 3px solid #2563eb; /* solid blue accent */
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      background-color: #2563eb;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.5px;
+      color: #0f172a;
+    }
+    .logo-text span {
+      color: #2563eb;
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #1e293b;
+      transition: color 0.15s ease;
+      font-size: 1.1rem;
+      padding: 0.4rem 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: #2563eb;
+      border-bottom-color: #2563eb;
+    }
+
+    /* auth button group — beautiful login/signup */
+    .auth-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-login {
+      background: transparent;
+      border: 2px solid #2563eb;
+      color: #2563eb;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-login i {
+      font-size: 0.95rem;
+    }
+
+    .btn-login:hover {
+      background-color: #eef4ff;
+      border-color: #1d4ed8;
+      color: #1d4ed8;
+      transform: scale(1.02);
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.15);
+    }
+
+    .btn-signup {
+      background: #2563eb;
+      border: 2px solid #2563eb;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.6rem 1.8rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-signup i {
+      font-size: 0.95rem;
+    }
+
+    .btn-signup:hover {
+      background-color: #1d4ed8;
+      border-color: #1d4ed8;
+      transform: scale(1.02);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.35);
+    }
+
+    /* main hero section — white & blue theme */
+    .hero-section {
+      flex: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 3rem;
+    }
+
+    .hero-content {
+      flex: 1 1 400px;
+    }
+
+    .hero-badge {
+      background-color: #dbeafe;
+      color: #1e40af;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      border: 1px solid #bfdbfe;
+    }
+
+    .hero-content h1 {
+      font-size: 3.3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      color: #0f172a;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-highlight {
+      color: #2563eb;
+      background: linear-gradient(145deg, #2563eb, #1e40af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      color: #334155;
+      max-width: 540px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .cta-primary {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 12px 24px -8px #2563eb70;
+      transition: 0.15s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cta-primary:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 28px -8px #1e40af;
+    }
+
+    .cta-secondary {
+      background-color: white;
+      color: #2563eb;
+      border: 2px solid #2563eb;
+      padding: 1rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: 0.15s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cta-secondary:hover {
+      background-color: #eff6ff;
+      border-color: #1d4ed8;
+      color: #1d4ed8;
+      transform: translateY(-3px);
+    }
+
+    /* right side — chat illustration / card */
+    .hero-visual {
+      flex: 1 1 360px;
+      background: white;
+      border-radius: 40px;
+      padding: 2rem 1.8rem;
+      box-shadow: 0 40px 50px -20px rgba(0, 70, 150, 0.2);
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      backdrop-filter: blur(2px);
+    }
+
+    .chat-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .message-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .message-row.me {
+      justify-content: flex-end;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      background: #2563eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 6px 12px #2563eb30;
+    }
+
+    .avatar.other {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    .bubble {
+      background: #f1f5f9;
+      padding: 0.9rem 1.4rem;
+      border-radius: 24px 24px 24px 4px;
+      max-width: 260px;
+      color: #0f172a;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 8px #e2e8f0;
+    }
+
+    .message-row.me .bubble {
+      background: #2563eb;
+      color: white;
+      border-radius: 24px 24px 4px 24px;
+      box-shadow: 0 8px 18px #2563eb40;
+    }
+
+    .typing-indicator {
+      display: flex;
+      gap: 5px;
+      padding: 0.6rem 1.2rem;
+      background: #f1f5f9;
+      width: fit-content;
+      border-radius: 40px;
+      margin-top: 0.5rem;
+    }
+
+    .typing-indicator span {
+      width: 10px;
+      height: 10px;
+      background: #94a3b8;
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 1.4s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 60%, 100% { opacity: 0.4; transform: scale(1); }
+      30% { opacity: 1; transform: scale(1.2); background: #2563eb; }
+    }
+
+    /* features micro section (white/blue) */
+    .feature-section {
+      background-color: white;
+      padding: 3rem 2rem;
+      border-top: 1px solid #e6f0ff;
+      border-bottom: 1px solid #e6f0ff;
+    }
+
+    .feature-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .feature-item {
+      text-align: center;
+      max-width: 250px;
+    }
+
+    .feature-icon {
+      background: #dbeafe;
+      width: 70px;
+      height: 70px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+      color: #2563eb;
+      font-size: 2rem;
+      transition: 0.2s;
+      border: 2px solid white;
+      box-shadow: 0 4px 10px #bfdbfe;
+    }
+
+    .feature-item h3 {
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-item p {
+      color: #475569;
+    }
+
+    /* footer minimal */
+    .footer {
+      background-color: white;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      color: #64748b;
+      border-top: 1px solid #e2efff;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      .nav-links {
+        gap: 1.5rem;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar – white & blue -->
+  <nav class="navbar">
+    <div class="logo-area">
+      <div class="logo-icon">
+        <i class="fas fa-comment-dots"></i>
+      </div>
+      <div class="logo-text">chat<span>app</span></div>
+    </div>
+    <div class="nav-links">
+    </div>
+    <div class="auth-buttons">
+      <a href="{% url 'login' %}" class="btn-login"><i class="fas fa-sign-in-alt"></i> Log in</a>
+      <a href="{% url 'register' %}" class="btn-signup"><i class="fas fa-user-plus"></i> Sign up</a>
+    </div>
+  </nav>
+
+  <!-- Hero / main welcome area -->
+  <main class="hero-section">
+    <div class="hero-content">
+      <span class="hero-badge"><i class="fas fa-bolt" style="margin-right: 6px;"></i> real‑time · secure</span>
+      <h1>
+        Connect instantly with <br><span class="hero-highlight">loved ones</span> 
+      </h1>
+      <p class="hero-description">
+        A professional chat experience crafted for beautiful messages. Fast, elegant, and built for meaningful conversations.
+      </p>
+
+    </div>
+
+    <div class="hero-visual">
+      <div class="chat-preview">
+        <div class="message-row">
+          <div class="avatar other">JD</div>
+          <div class="bubble">Hey, have you seen the new chat ui?</div>
+        </div>
+        <div class="message-row me">
+          <div class="bubble">Yes! it's clean white & blue. very professional.</div>
+          <div class="avatar">ME</div>
+        </div>
+        <div class="message-row">
+          <div class="avatar other">AL</div>
+          <div class="bubble">I love the smooth animations 🚀</div>
+        </div>
+        <div class="typing-indicator">
+          <span style="animation-delay:0s"></span>
+          <span style="animation-delay:0.2s"></span>
+          <span style="animation-delay:0.4s"></span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Feature highlights (white/blue) -->
+  <section class="feature-section">
+    <div class="feature-container">
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-lock"></i></div>
+        <h3>Private & safe</h3>
+        <p>End‑to‑end encryption, because your conversations matter.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+        <h3>Real‑time</h3>
+        <p>Messages arrive instantly with Django channels & websockets.</p>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><i class="fas fa-palette"></i></div>
+        <h3>White & blue theme</h3>
+        <p>Clean, modern, and easy on the eyes — designed for focus.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- subtle call to action signup / login again -->
+  <div style="background: white; padding: 2.5rem 1rem; text-align: center;">
+    <h2 style="color: #0f172a; font-size: 2rem; font-weight: 700; margin-bottom: 1rem;">Join the conversation</h2>
+    <p style="color: #334155; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">Be part of a growing community. Sign up in seconds and start chatting.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+      <a href="#" class="btn-signup" style="padding: 0.9rem 2.8rem;"><i class="fas fa-user-plus"></i> Create account</a>
+      <a href="#" class="btn-login" style="padding: 0.9rem 2.8rem;"><i class="fas fa-sign-in-alt"></i> Log in</a>
+    </div>
+
+  <!-- footer -->
+  <footer class="footer">
+    <p>© {% now "Y" %} chat app  <i class="fas fa-heart" style="color: #2563eb;"></i> using Django</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users · Chat App</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8faff;
+      color: #1e293b;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navigation - matching previous pages */
+    .navbar {
+      background-color: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 100, 200, 0.08);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      border-bottom: 3px solid #2563eb;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      background-color: #2563eb;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.5px;
+      color: #0f172a;
+    }
+    .logo-text span {
+      color: #2563eb;
+      font-weight: 300;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #1e293b;
+      transition: color 0.15s ease;
+      font-size: 1.1rem;
+      padding: 0.4rem 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: #2563eb;
+      border-bottom-color: #2563eb;
+    }
+
+    .nav-links a.active {
+      color: #2563eb;
+      border-bottom-color: #2563eb;
+    }
+
+    /* User info and logout */
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: #f0f4ff;
+      padding: 0.4rem 1rem 0.4rem 0.8rem;
+      border-radius: 40px;
+      border: 1px solid #dbeafe;
+    }
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      background: #2563eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: #0f172a;
+      font-size: 0.95rem;
+    }
+
+    .user-status {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-text {
+      color: #64748b;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: 2px solid #ef4444;
+      color: #ef4444;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-logout i {
+      font-size: 0.95rem;
+    }
+
+    .btn-logout:hover {
+      background-color: #fef2f2;
+      border-color: #dc2626;
+      color: #dc2626;
+      transform: scale(1.02);
+      box-shadow: 0 8px 16px rgba(220, 38, 38, 0.15);
+    }
+
+    /* Main container */
+    .container {
+      flex: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem;
+      width: 100%;
+    }
+
+    /* Page header */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-title h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .page-title h1 span {
+      color: #2563eb;
+    }
+
+    .page-title p {
+      color: #64748b;
+      margin-top: 0.3rem;
+    }
+
+    .user-stats {
+      background: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .user-stats i {
+      color: #2563eb;
+      margin-right: 0.5rem;
+    }
+
+    .user-stats span {
+      font-weight: 600;
+      color: #2563eb;
+    }
+
+    /* Search bar */
+    .search-container {
+      margin-bottom: 2rem;
+    }
+
+    .search-box {
+      position: relative;
+      max-width: 400px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.9rem 1rem 0.9rem 3rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: white;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    /* Users grid */
+    .users-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .user-card {
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px -10px rgba(37, 99, 235, 0.15);
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .user-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 30px -10px rgba(37, 99, 235, 0.25);
+      border-color: #2563eb;
+    }
+
+    .user-card-avatar {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1.5rem;
+      box-shadow: 0 8px 15px -5px #2563eb;
+    }
+
+    .user-card-info {
+      flex: 1;
+    }
+
+    .user-card-name {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #0f172a;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .user-badge {
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .user-card-email {
+      color: #64748b;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .user-card-email i {
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+
+    .user-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-online {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .status-online i {
+      color: #10b981;
+    }
+
+    .status-offline {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .status-offline i {
+      color: #94a3b8;
+    }
+
+    .last-seen {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-left: 0.5rem;
+    }
+
+    .user-card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .btn-message {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-message:hover {
+      background: #1d4ed8;
+      transform: scale(1.02);
+    }
+
+    .btn-profile {
+      background: transparent;
+      border: 1.5px solid #e2e8f0;
+      color: #475569;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn-profile:hover {
+      border-color: #2563eb;
+      color: #2563eb;
+      background: #f0f4ff;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: white;
+      border-radius: 40px;
+      border: 2px dashed #e2e8f0;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: #cbd5e1;
+      margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+      color: #334155;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+      color: #94a3b8;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: white;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      color: #64748b;
+      border-top: 1px solid #e2efff;
+      font-size: 0.95rem;
+      margin-top: auto;
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      .user-menu {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation with Logout -->
+  <nav class="navbar">
+    <div class="logo-area">
+      <div class="logo-icon">
+        <i class="fas fa-comment-dots"></i>
+      </div>
+      <div class="logo-text">chat<span>app</span></div>
+    </div>
+
+    <!-- User menu with logout -->
+    <div class="user-menu">
+      <div class="user-info">
+        <div class="user-avatar">
+          {{ request.user.username|first|upper }}
+        </div>
+        <div class="user-details">
+          <span class="user-name">{{ request.user.username }}</span>
+          <span class="user-status">
+            <span class="status-dot"></span>
+            <span class="status-text">Online</span>
+          </span>
+        </div>
+      </div>
+      
+      <!-- Logout button -->
+      <a href="{% url 'logout' %}" class="btn-logout">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main container -->
+  <div class="container">
+    <!-- Search bar -->
+    <div class="search-container">
+      <div class="search-box">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" 
+               class="search-input" 
+               id="searchInput" 
+               placeholder="Search users by name or email..."
+               onkeyup="searchUsers()">
+      </div>
+    </div>
+
+    <!-- Users grid -->
+    <div class="users-grid" id="usersGrid">
+  {% for user in users %}
+    {% if user.username != request.user.username %}
+
+      <!-- Clickable User Card -->
+      <a href="{% url 'chat' user.username %}" style="text-decoration:none; color:inherit;">
+        <div class="user-card" data-name="{{ user.username|lower }}" data-email="{{ user.email|lower }}">
+          
+          <div class="user-card-avatar">
+            {{ user.username|first|upper }}
+          </div>
+
+          <div class="user-card-info">
+
+            <div class="user-card-name">
+              {{ user.username }}
+              {% if user.is_superuser %}
+                <span class="user-badge">Admin</span>
+              {% endif %}
+            </div>
+
+            <div class="user-card-email">
+              <i class="fas fa-envelope"></i> {{ user.email }}
+            </div>
+            
+            <!-- User status -->
+            {% if user.is_online %}
+              <span class="user-status-badge status-online">
+                <i class="fas fa-circle"></i> Online
+              </span>
+            {% else %}
+              <span class="user-status-badge status-offline">
+                <i class="fas fa-circle"></i> Offline
+              </span>
+
+              {% if user.last_seen %}
+                <span class="last-seen">
+                  Last seen: {{ user.last_seen|timesince }} ago
+                </span>
+              {% endif %}
+            {% endif %}
+
+          </div>
+
+        </div>
+      </a>
+
+    {% endif %}
+  {% empty %}
+    <div class="empty-state">
+      <i class="fas fa-users-slash"></i>
+      <h3>No users found</h3>
+      <p>There are no other users to display.</p>
+    </div>
+  {% endfor %}
+</div>
+</div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© {% now "Y" %} chat app · built with <i class="fas fa-heart" style="color: #2563eb;"></i> using Django</p>
+  </footer>
+
+  <!-- Search functionality -->
+  <script>
+    function searchUsers() {
+      const input = document.getElementById('searchInput');
+      const filter = input.value.toLowerCase();
+      const grid = document.getElementById('usersGrid');
+      const cards = grid.getElementsByClassName('user-card');
+
+      for (let i = 0; i < cards.length; i++) {
+        const card = cards[i];
+        const name = card.getAttribute('data-name');
+        const email = card.getAttribute('data-email');
+        
+        if (name.includes(filter) || email.includes(filter)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      }
+    }
+  </script>
+</body>
+</html>
